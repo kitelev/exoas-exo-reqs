@@ -2,14 +2,16 @@
 exo__Asset_uid: ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T01:30:00+05:00
-exo__Asset_updatedAt: 2026-06-22T09:13:28+05:00
+exo__Asset_updatedAt: 2026-06-22T10:50:38+05:00
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
 exo__Asset_label: "req(exo): creating an instance surfaces the class's SHACL-required properties as form fields"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[01d50c3d-ade2-4b5f-a35c-f9fd120debd3|req__RequirementPriorityP0]]"
 req__Requirement_bindingClass:
+  - "[[cc677c5f-b4ac-4ec3-9baa-e7ab79b78113|req__RequirementBindingClassUnit]]"
+  - "[[d58c8af5-6366-4b79-aa2a-74b187e461f0|req__RequirementBindingClassE2e]]"
   - "[[cc677c5f-b4ac-4ec3-9baa-e7ab79b78113|req__RequirementBindingClassUnit]]"
   - "[[1132e93c-6943-49eb-b7ad-4fbd20eee636|req__RequirementBindingClassGuiBdd]]"
 req__Requirement_area: "[[bd76637d-5788-4c30-a3d8-c88dcdd9970f|Exocortex Development]]"
