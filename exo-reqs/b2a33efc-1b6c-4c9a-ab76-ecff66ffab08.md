@@ -2,14 +2,19 @@
 exo__Asset_uid: b2a33efc-1b6c-4c9a-ab76-ecff66ffab08
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-07-12T19:37:07+05:00
-exo__Asset_updatedAt: 2026-07-12T19:39:20+05:00
+exo__Asset_updatedAt: 2026-07-12T20:04:26+05:00
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
 exo__Asset_label: "req(exo): a pn__DailyNote exo__Layout can render a 'Closed today' section — a new 'closed' daily-efforts partition listing efforts whose ems__Effort_resolutionTimestamp (or ems__Effort_endTimestamp) falls on the note's day (so Trashed-only closures surface, not just Done), computed local-tz, additive to the existing Actions/Tasks/Projects class partitions with zero regression, homoiconic (Layout+Block are vault assets), desktop+mobile"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-07-12T19:39:20+05:00
+req__Requirement_activatedAt: 2026-07-12T20:04:26+05:00
+req__Requirement_implementedBy:
+  - "PR #3898 (squash ca2a1288) — closed daily-efforts partition. core: LayoutBlock.ts (DailyEffortsPartition +closed), dailyEffortsPartition.ts (DailyEffortsPartitioned.closed, orthogonal axis filled by renderer), blockVisibility.ts (closed built-in shown + pn__DailyNote_showClosed override). plugin: DailyNoteHelpers.isEffortClosedInDay (resolution/end on day, local-tz), DailyEffortsCollector (union collect + stamp inDay/closedInDay), ExoLayoutRenderer.computeDailyPartition (class buckets over inDay subset = zero regression; closed = closedInDay subset). CI 14/14 required green; merged v-next."
+req__Requirement_verifiedBy:
+  - "@req:b2a33efc-1b6c-4c9a-ab76-ecff66ffab08 bound across (Unit) packages/obsidian-plugin/tests/unit/DailyNoteHelpers.closedInDay.test.ts (resolution/end match, Trashed-only closure caught, started-only/plannedEnd/wrong-day/empty/invalid excluded; tz-robust local-noon) + packages/core/tests/domain/layout/LayoutBlock.test.ts (closed partition parses + normalises); and (Component) packages/obsidian-plugin/tests/unit/presentation/renderers/ExoLayoutRenderer.dailyEffortsClosed.test.ts (closed block lists Done+Trashed; Trashed-only ONLY in closed NEVER in Tasks = zero regression to a38ac95b; empty-day empty block no error; built-in shown + pn__DailyNote_showClosed:false hides). Revert-verified RED->GREEN on 3 type-preserving-break axes: closed-filter neutralised -> closed-content tests RED(2); class buckets over ALL efforts (drop inDay filter) -> zero-regression test RED(1); isEffortClosedInDay closure fields emptied -> positive-match tests RED(3); all restored GREEN (typecheck 0, plugin 54/54 incl a38ac95b regression, core 44/44). code path is layout renderer/domain (not parser/TBox/sync/settings) -> self-reviewed, CI-gated. DEPLOYMENT: the code delivers the CAPABILITY; the LIVE homoiconic pn__DailyNote daily-efforts layout (exo__DailyEffortsByClassBlock class-def + exo__Layout + 4 block instances incl Closed) was NEVER deployed by a38ac95b (0 layouts in vault-my; class-def absent from repo+vaults) and is a follow-up GitHub issue requiring the released plugin + Andrey UX call (activating any pn__DailyNote layout suppresses the legacy feed). Pixel-visual deferred to that deployment."
 req__Requirement_priority: "[[3c28e0c7-7cf8-4041-9230-d37a04d3981e|req__RequirementPriorityP3]]"
 req__Requirement_bindingClass:
   - "[[aefdb1a3-ae87-4d4e-93fb-fb989a243c0c|req__RequirementBindingClassComponent]]"
