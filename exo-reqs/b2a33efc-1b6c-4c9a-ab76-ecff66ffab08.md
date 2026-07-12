@@ -2,12 +2,14 @@
 exo__Asset_uid: b2a33efc-1b6c-4c9a-ab76-ecff66ffab08
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-07-12T19:37:07+05:00
-exo__Asset_updatedAt: 2026-07-12T19:37:07+05:00
+exo__Asset_updatedAt: 2026-07-12T19:39:20+05:00
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
 exo__Asset_label: "req(exo): a pn__DailyNote exo__Layout can render a 'Closed today' section — a new 'closed' daily-efforts partition listing efforts whose ems__Effort_resolutionTimestamp (or ems__Effort_endTimestamp) falls on the note's day (so Trashed-only closures surface, not just Done), computed local-tz, additive to the existing Actions/Tasks/Projects class partitions with zero regression, homoiconic (Layout+Block are vault assets), desktop+mobile"
-req__Requirement_status: "[[cb2e9a63-081e-46fa-89b9-7ed479516a62|req__RequirementStatusProposed]]"
+req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
+req__Requirement_approvedAt: 2026-07-12T19:39:20+05:00
 req__Requirement_priority: "[[3c28e0c7-7cf8-4041-9230-d37a04d3981e|req__RequirementPriorityP3]]"
 req__Requirement_bindingClass:
   - "[[aefdb1a3-ae87-4d4e-93fb-fb989a243c0c|req__RequirementBindingClassComponent]]"
