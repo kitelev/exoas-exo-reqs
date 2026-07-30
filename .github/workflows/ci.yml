@@ -1,0 +1,8 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  ci:
+    uses: kitelev/exoas-ci/.github/workflows/assetspace-ci.yml@main
+    with:
+      warn_only: false
+      resolve_deps: true
