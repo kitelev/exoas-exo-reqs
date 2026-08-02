@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: 0bb06beb-9d7f-448a-bfa3-fd3ab1c3476b
 exo__Asset_createdAt: 2026-08-02T22:41:46
-exo__Asset_updatedAt: 2026-08-02T22:46:29
+exo__Asset_updatedAt: 2026-08-02T23:48:01
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,13 +9,14 @@ exo__Asset_label: "req(exo): the legacy prototype backlink fires only when the t
 aliases:
   - "req(exo): the legacy prototype backlink fires only when the target IS a prototype"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[2c58b8ec-8a68-463b-a694-dfe6afeb861b|req__RequirementPriorityP1]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
 req__Requirement_author: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_covers: exo create_instance — legacy exo__Asset_prototype backlink top-up gated on target being a prototype
 req__Requirement_approvedBy: "[[0aa339bc-9b56-400a-8148-cbde57bbf0b6|a.kitelev]]"
 req__Requirement_approvedAt: 2026-08-02T22:47:00+05:00
+req__Requirement_implementedBy: "PR #4020 (squash f6cbe26f)"
 ---
 # req(exo): the legacy prototype backlink fires only when the target IS a prototype, and links by UID
 
@@ -58,7 +59,9 @@ Given a create_instance grounding runs on a click-target
   And no already-written property references the target
 
 When the click-target is NOT a prototype
-  (its exo__Instance_class names no *Prototype class)
+  (none of its exo__Instance_class refs reaches exo__Prototype
+   by walking exo__Class_superClass — a name-suffix test is NOT used;
+   req 5579ffa1 de-hacked exactly that heuristic)
 Then the created asset carries NO exo__Asset_prototype
   And no "No backlink rule fired" error is logged
   And every other property the pipeline wrote is unchanged
