@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: faf269bf-d4ff-4e84-b0ea-c41bf46da035
 exo__Asset_createdAt: 2026-08-03T12:57:51
-exo__Asset_updatedAt: 2026-08-03T13:23:39
+exo__Asset_updatedAt: 2026-08-03T14:40:54
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,13 +9,14 @@ exo__Asset_label: Шаг команды адресует ассет, найде�
 aliases:
   - Шаг команды адресует ассет, найденный именованным запросом
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[2c58b8ec-8a68-463b-a694-dfe6afeb861b|req__RequirementPriorityP1]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
 req__Requirement_author: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_covers: exocmd__Grounding_targetQuery
 req__Requirement_approvedBy: "[[0aa339bc-9b56-400a-8148-cbde57bbf0b6|a.kitelev]]"
 req__Requirement_approvedAt: "2026-08-03"
+req__Requirement_implementedBy: "PR #4023"
 ---
 Шаг гомоиконичной команды умеет адресовать ровно две вещи: ассет, на котором нажали, и ассет, созданный предыдущим шагом. Найти цель **запросом** нечем — а это ровно то, чего требует любая реифицированная связь: она не click-target и не создаётся шагом, её надо найти по одному из концов.
 
