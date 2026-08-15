@@ -9,7 +9,7 @@ exo__Asset_label: "req(exo): host-функции displayName (isEffortBlocked, i
 aliases:
   - "req(exo): host-функции displayName (isEffortBlocked, isEpisodeOngoing) переезжают в core за уже существующий VaultMetadataPort, CLI их регистрирует — оракул имени перестаёт молча пропускать 2 спеки из 35 (83 ассета); потребители плагина не правятся"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[481c3be1-d05c-4b78-8a3c-c61308d40bf1|req__RequirementPriorityP2]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
 req__Requirement_area: "[[bd76637d-5788-4c30-a3d8-c88dcdd9970f|Exocortex Development]]"
