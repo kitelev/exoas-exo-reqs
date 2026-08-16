@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: 1da8e1bf-22e7-4f2b-b0ec-86dde1adf3e8
 exo__Asset_createdAt: 2026-08-16T11:41:43
-exo__Asset_updatedAt: 2026-08-16T12:11:02
+exo__Asset_updatedAt: 2026-08-16T12:19:32
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,7 +9,7 @@ exo__Asset_label: "req(exo): DisplayNameResolver читает classTemplates к�
 aliases:
   - "req(exo): DisplayNameResolver читает classTemplates как СОБСТВЕННОЕ свойство — метка класса, равная члену Object.prototype, больше не роняет резолвер TypeError (пятая и единственная БРОСАЮЩАЯ точка класса)"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[481c3be1-d05c-4b78-8a3c-c61308d40bf1]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c]]"
 req__Requirement_area: "[[bd76637d-5788-4c30-a3d8-c88dcdd9970f]]"
