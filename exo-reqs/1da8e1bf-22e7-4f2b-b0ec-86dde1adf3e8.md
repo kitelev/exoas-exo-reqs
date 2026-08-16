@@ -1,9 +1,10 @@
 ---
 exo__Asset_uid: 1da8e1bf-22e7-4f2b-b0ec-86dde1adf3e8
 exo__Asset_createdAt: 2026-08-16T11:41:43
-exo__Asset_updatedAt: 2026-08-16T12:19:32
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
 exo__Asset_label: "req(exo): DisplayNameResolver читает classTemplates как СОБСТВЕННОЕ свойство — метка класса, равная члену Object.prototype, больше не роняет резолвер TypeError (пятая и единственная БРОСАЮЩАЯ точка класса)"
 aliases:
@@ -17,6 +18,7 @@ req__Requirement_author: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76]]"
 req__Requirement_covers:
   - exo core — DisplayNameResolver.resolveRenderSpec читает settings.classTemplates как СОБСТВЕННОЕ свойство, поэтому метка класса с именем члена Object.prototype даёт undefined вместо унаследованной функции и резолвер не бросает TypeError
   - "exo core — штатный путь не меняется: собственный ключ в classTemplates применяется байт-в-байт, обычные метки классов резолвятся как сегодня"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # Job Story

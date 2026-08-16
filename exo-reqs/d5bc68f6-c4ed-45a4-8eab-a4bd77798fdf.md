@@ -1,9 +1,10 @@
 ---
 exo__Asset_uid: d5bc68f6-c4ed-45a4-8eab-a4bd77798fdf
 exo__Asset_createdAt: 2026-08-02T22:11:30
-exo__Asset_updatedAt: 2026-08-02T22:29:37
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
 exo__Asset_label: "req(exo): removing a knowledge pack states its blast radius before the destructive confirm — the still-mounted packs that declare a dependsOn on it, and the resolved links from remaining notes that would be left dangling (P2 of project 17c173dd, re-scoped to the warning half per its P0 falsification verdict)"
 aliases:
@@ -19,6 +20,7 @@ req__Requirement_covers: "P2 of project 17c173dd (Profile-based mount management
 req__Requirement_approvedBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-08-02T22:12:28
 req__Requirement_implementedBy: "PR #4019 (P2 of project 17c173dd)"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # req(exo): removing a knowledge pack warns about what it would break

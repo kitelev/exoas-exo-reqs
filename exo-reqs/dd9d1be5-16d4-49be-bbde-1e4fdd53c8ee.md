@@ -2,10 +2,11 @@
 exo__Asset_uid: dd9d1be5-16d4-49be-bbde-1e4fdd53c8ee
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T12:32:45+05:00
-exo__Asset_updatedAt: 2026-06-22T10:50:38+05:00
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_label: "req(exo): audit co-location reports a violation when an asset's folder differs from its isDefinedBy ontology folder"
 req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[01d50c3d-ade2-4b5f-a35c-f9fd120debd3|req__RequirementPriorityP0]]"
@@ -20,6 +21,7 @@ req__Requirement_verifiedBy:
   - "packages/cli/tests/integration/commands/audit-co-location.integration.test.ts::audit co-location — revert→fail / restore→pass (integration) > PASS when co-located, FAIL when moved away, PASS again when restored"
 req__Requirement_implementedBy:
   - "scanVaultForCoLocation (packages/cli/src/commands/audit-co-location.ts) — compares normalizePath(dirname(ontologyPath)) vs normalizePath(dirname(relPath)) and pushes a violation on mismatch; the same resolver used by `apply repair-folder` / co-location placement on create"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # req(exo): audit co-location reports a violation when an asset's folder differs from its isDefinedBy ontology folder

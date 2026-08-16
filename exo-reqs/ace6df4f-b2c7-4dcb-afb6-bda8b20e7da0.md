@@ -2,10 +2,11 @@
 exo__Asset_uid: ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T01:30:00+05:00
-exo__Asset_updatedAt: 2026-06-22T10:50:38+05:00
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_label: "req(exo): creating an instance surfaces the class's SHACL-required properties as form fields"
 req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[01d50c3d-ade2-4b5f-a35c-f9fd120debd3|req__RequirementPriorityP0]]"
@@ -24,6 +25,7 @@ req__Requirement_verifiedBy:
 req__Requirement_implementedBy:
   - "RequiredPropertyResolver.createTripleStoreRequiredPropertyResolver (exocortex)"
   - "CommandExecutionFlow required-property field augmentation (T3 #3656)"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # req(exo): creating an instance surfaces the class's SHACL-required properties as form fields

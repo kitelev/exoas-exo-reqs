@@ -1,9 +1,10 @@
 ---
 exo__Asset_uid: 5cd9fffe-1fa5-4fda-8e2a-bfe6d4c88379
 exo__Asset_createdAt: 2026-08-15T19:24:16
-exo__Asset_updatedAt: 2026-08-15T21:16:01
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
 exo__Asset_label: "req(exo): host-функции displayName (isEffortBlocked, isEpisodeOngoing) переезжают в core за уже существующий VaultMetadataPort, CLI их регистрирует — оракул имени перестаёт молча пропускать 2 спеки из 35 (83 ассета); потребители плагина не правятся"
 aliases:
@@ -18,6 +19,7 @@ req__Requirement_covers:
   - exo core — предикаты displayName-матчеров (isEffortBlocked, isEpisodeOngoing) живут в packages/core и обращаются к vault ТОЛЬКО через VaultMetadataPort.resolveLinkpathFrontmatter, введённый req f17f7c57; isEpisodeOngoing не обращается к vault вовсе
   - exo cli — resolve-display-name регистрирует обе host-функции, поэтому спека с _matchHostFunction участвует в составлении имени наравне с плагином; незнакомое имя функции по-прежнему fail-closed (спека молча не участвует, команда не падает)
   - "exo plugin — BlockerHelpers и EpisodePeriodHelpers сохраняют прежние сигнатуры и делегируют в core через Obsidian-адаптер: ни один из 4+4 потребителей BlockerHelpers и 1+1 потребителей EpisodePeriodHelpers не правится"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # Job Story

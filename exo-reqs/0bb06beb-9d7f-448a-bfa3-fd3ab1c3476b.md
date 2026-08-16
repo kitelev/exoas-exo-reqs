@@ -1,9 +1,10 @@
 ---
 exo__Asset_uid: 0bb06beb-9d7f-448a-bfa3-fd3ab1c3476b
 exo__Asset_createdAt: 2026-08-02T22:41:46
-exo__Asset_updatedAt: 2026-08-02T23:48:01
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
 exo__Asset_label: "req(exo): the legacy prototype backlink fires only when the target IS a prototype"
 aliases:
@@ -17,6 +18,7 @@ req__Requirement_covers: exo create_instance — legacy exo__Asset_prototype bac
 req__Requirement_approvedBy: "[[0aa339bc-9b56-400a-8148-cbde57bbf0b6|a.kitelev]]"
 req__Requirement_approvedAt: 2026-08-02T22:47:00+05:00
 req__Requirement_implementedBy: "PR #4020 (squash f6cbe26f)"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 # req(exo): the legacy prototype backlink fires only when the target IS a prototype, and links by UID
 

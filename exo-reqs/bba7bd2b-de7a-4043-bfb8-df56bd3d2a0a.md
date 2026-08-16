@@ -1,9 +1,10 @@
 ---
 exo__Asset_uid: bba7bd2b-de7a-4043-bfb8-df56bd3d2a0a
 exo__Asset_createdAt: 2026-08-16T18:04:15
-exo__Asset_updatedAt: 2026-08-16T18:32:12
+exo__Asset_updatedAt: 2026-08-16T19:16:22
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
+  - "[[62464150-2e47-486d-b808-631c9bba10ad]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
 exo__Asset_label: "req(exo): порог active-gate требует, чтобы КАЖДЫЙ объявленный ассетспейс требований дал хотя бы одно требование — потеря целого модуля больше не проходит зелёной"
 aliases:
@@ -21,6 +22,7 @@ req__Requirement_covers:
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-08-16T18:06:54
 req__Requirement_implementedBy: "PR #4067 (merge c6b97cc6)"
+flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
 # Job Story
