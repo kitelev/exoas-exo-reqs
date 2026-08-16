@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: bba7bd2b-de7a-4043-bfb8-df56bd3d2a0a
 exo__Asset_createdAt: 2026-08-16T18:04:15
-exo__Asset_updatedAt: 2026-08-16T18:07:00
+exo__Asset_updatedAt: 2026-08-16T18:32:12
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,7 +9,7 @@ exo__Asset_label: "req(exo): порог active-gate требует, чтобы �
 aliases:
   - "req(exo): порог active-gate требует, чтобы КАЖДЫЙ объявленный ассетспейс требований дал хотя бы одно требование — потеря целого модуля больше не проходит зелёной"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[2c58b8ec-8a68-463b-a694-dfe6afeb861b|req__RequirementPriorityP1]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
 req__Requirement_area: "[[bd76637d-5788-4c30-a3d8-c88dcdd9970f|Exocortex Development]]"
@@ -20,6 +20,7 @@ req__Requirement_covers:
   - exo req-audit — полный корпус проходит гейт байт-в-байт как раньше, а отчёт несёт разбивку корпуса по ассетспейсам
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-08-16T18:06:54
+req__Requirement_implementedBy: "PR #4067 (merge c6b97cc6)"
 ---
 
 # Job Story
