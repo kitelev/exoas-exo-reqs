@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: cef65fd5-8bf0-4082-afcc-9d0fb3fe68ac
 exo__Asset_createdAt: 2026-08-20T05:54:18
-exo__Asset_updatedAt: 2026-08-20T06:13:54
+exo__Asset_updatedAt: 2026-08-20T10:28:43
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,7 +9,7 @@ exo__Asset_label: EARL-исход выводится из severity, а не на
 aliases:
   - EARL-исход выводится из severity, а не назначается failed всем находкам
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[cb2e9a63-081e-46fa-89b9-7ed479516a62|req__RequirementStatusProposed]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_covers: buildEARLReport отображает sh:Violation в earl:failed, а sh:Warning в earl:cantTell; conforms и код возврата не меняются
 req__Requirement_author: "[[0aa339bc-9b56-400a-8148-cbde57bbf0b6|a.kitelev]]"
 ---
