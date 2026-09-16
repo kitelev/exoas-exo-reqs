@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: de7131ae-f9e5-4498-bf06-41ccbaadc7de
 exo__Asset_createdAt: 2026-09-16T13:12:51
-exo__Asset_updatedAt: 2026-09-16T13:13:19
+exo__Asset_updatedAt: 2026-09-16T13:46:30
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76]]"
@@ -18,7 +18,6 @@ req__Requirement_covers: "Plugin-side property writers/readers parity with the c
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-09-16T13:13:15
 ---
-
 ## Job story
 
 When I edit an asset's properties through the plugin's own property surfaces — an inline cell in a layout table (`LayoutService.handleCellEdit` → `ObsidianVaultAdapter.updateFrontmatter`) or the Property Editor modal — I want those surfaces to speak the SAME frontmatter-key dialect as the core chokepoint (`canonicalYamlKey` / `LEGACY_YAML_KEYS`, req `960d7a3f`; `UNPREFIXED_ASSET_FIELDS`, req `869561bf`), so that an asset never carries two spellings of one flag on disk and the Archived checkbox shows what every other reader (`MetadataHelpers.isAssetArchived`, exocmd preconditions, CLI) already sees.
@@ -74,9 +73,9 @@ When it is written through `ObsidianVaultAdapter.updateFrontmatter`
 Then both keys are written under their own names (canonicalisation does not rewrite arbitrary keys).
 
 ### Scenario H — the Property Editor's Archived checkbox reflects the legacy carrier
-Given the Property Editor form is opened on an asset whose frontmatter carries the legacy bare key `archived: true` and NO `exo__Asset_archived`
+Given the Property Editor form is opened on an asset whose frontmatter carries the legacy bare key `archived: true` and NO `exo__Asset_archived` — or an EMPTY one (`exo__Asset_archived:` with no value, i.e. `null`, which every reader skips exactly like an absent key)
 When the form renders the `exo__Asset_archived` boolean field
-Then the "Archived" checkbox is checked (the form seeds `exo__Asset_archived` from `MetadataHelpers.isAssetArchived(frontmatter)`).
+Then the "Archived" checkbox is checked (the form seeds `exo__Asset_archived` from `MetadataHelpers.isAssetArchived(frontmatter)`; "present" uses the readers' predicate `raw !== undefined && raw !== null`, not key existence — PR #4241 review LOW-2).
 
 ### Scenario I — saving the form writes only the canonical key
 Given the same legacy carrier opened in the Property Editor
@@ -89,10 +88,12 @@ Given an asset with NO archive-flag key at all (`exo__Asset_archived`, `exo__Ass
 When the form is saved
 Then the save payload contains NO `exo__Asset_archived` key (Save must not stamp `exo__Asset_archived: false` on every asset).
 
-### Scenario K — a dual carrier renders by the readers' priority
+### Scenario K — a dual carrier renders by the readers' priority, and Save never re-emits the legacy key
 Given an asset carrying BOTH `archived: true` and `exo__Asset_archived: false`
 When the Property Editor form renders
-Then the "Archived" checkbox is unchecked (canonical key present → seed untouched → the same priority as `ARCHIVED_FLAG_KEYS`).
+Then the "Archived" checkbox is unchecked (the canonical value is kept — the same priority as `ARCHIVED_FLAG_KEYS`)
+And when the form is saved without touching the checkbox, the save payload carries `exo__Asset_archived: false` and NO `archived` key
+(the legacy/alias keys are dropped from the seed in EVERY case, not only when the canonical key is absent: the modal's Save writes payload keys in FILE order through `FrontmatterService.updateProperty`, and a re-emitted `archived: true` would canonicalise into an `exo__Asset_archived` write that silently overwrites a canonical `false` sitting above it — PR #4241 review MEDIUM).
 
 ## Non-goals
 
@@ -104,4 +105,3 @@ Then the "Archived" checkbox is unchecked (canonical key present → seed untouc
 ## Refs
 
 - Tickets `3aa8a7dd`, `24d7edcc` (parent techbacklog `bbac67ce`); `ems__Bug` `43e41c8f`; req `960d7a3f` (chokepoint, Active), req `869561bf` §Scope (Active); PR kitelev/exocortex#4240 review (LOW, out of diff).
-
