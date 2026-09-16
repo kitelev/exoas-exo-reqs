@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: de7131ae-f9e5-4498-bf06-41ccbaadc7de
 exo__Asset_createdAt: 2026-09-16T13:12:51
-exo__Asset_updatedAt: 2026-09-16T13:46:30
+exo__Asset_updatedAt: 2026-09-16T13:49:54
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76]]"
@@ -9,7 +9,7 @@ exo__Asset_label: "req(exo): plugin property surfaces (layout cell-edit writer, 
 aliases:
   - "req(exo): plugin property surfaces (layout cell-edit writer, Property Editor form) are in parity with the archive-flag chokepoint — cell-edit writes canonicalYamlKey + drops the legacy spelling (canonical-wins on collision), Property Editor seeds the Archived checkbox from MetadataHelpers.isAssetArchived and its Save writes only the canonical key (tickets 3aa8a7dd / 24d7edcc)"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[2c58b8ec-8a68-463b-a694-dfe6afeb861b|req__RequirementPriorityP1]]"
 req__Requirement_bindingClass: "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
 req__Requirement_area: "[[bd76637d-5788-4c30-a3d8-c88dcdd9970f|Exocortex Development]]"
@@ -17,6 +17,7 @@ req__Requirement_author: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_covers: "Plugin-side property writers/readers parity with the core archive-flag chokepoint (req 960d7a3f) and the canonical-YAML-key rule (req 869561bf): ObsidianVaultAdapter.updateFrontmatter maps every written key through canonicalYamlKey(normalizeIRI(key)), drops LEGACY_YAML_KEYS of the written canonical key from the live frontmatter, and resolves a payload that carries both spellings canonical-wins (same priority as NoteToRDFConverter guard M1 / MetadataHelpers.ARCHIVED_FLAG_KEYS); LayoutService.handleCellEdit canonicalises the edited column's property name BEFORE building the update payload so a dual carrier edited through the bare `archived` column keeps the edit; editing ANY column on a legacy `archived:` carrier migrates it to exo__Asset_archived (value preserved, graph-neutral, ORCH decision eb07dc18); exo__Asset_aliases written by the cell editor lands on `aliases` (869561bf §Scope remainder). PropertyEditorForm seeds formData.exo__Asset_archived = MetadataHelpers.isAssetArchived(frontmatter) ONLY when the canonical key is absent and a legacy/alias carrier (exo__Asset_isArchived / archived) is present, and drops those legacy keys from the seed so Save (PropertyEditorModal.handleSave → FrontmatterService.updateProperty) writes the canonical key only; no archive key is invented for an asset that has none. Source: tickets 3aa8a7dd, 24d7edcc (S7 da0f73a3, PR #4240 review), ems__Bug 43e41c8f; approved by ORCH main-35699 mandate at the code-batch plan-gate 2026-09-16 (decision eb07dc18)."
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-09-16T13:13:15
+req__Requirement_implementedBy: "PR kitelev/exocortex#4241 (merge 6c6c18b1): ObsidianVaultAdapter.updateFrontmatter canonicalYamlKey + LEGACY_YAML_KEYS drop + canonical-wins; LayoutService.handleCellEdit canonicalises the edited column; PropertyEditorForm.seedArchivedFlag; 16 axes A1-A16, 9 mutants"
 ---
 ## Job story
 
