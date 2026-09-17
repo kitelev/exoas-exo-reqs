@@ -2,7 +2,7 @@
 exo__Asset_uid: ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T01:30:00+05:00
-exo__Asset_updatedAt: 2026-08-16T19:16:22
+exo__Asset_updatedAt: 2026-09-17T15:29:50
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
@@ -23,8 +23,9 @@ req__Requirement_verifiedBy:
   - "packages/exocortex/tests/unit/services/RequiredPropertyResolver.test.ts::createTripleStoreRequiredPropertyResolver > resolves a class's required (minCount>0) properties, skipping non-required"
   - "packages/obsidian-plugin/tests/e2e/eka-gui/create-instance-buttons.spec.ts (gui-bdd, real Obsidian Playwright) — floor binding"
 req__Requirement_implementedBy:
-  - "RequiredPropertyResolver.createTripleStoreRequiredPropertyResolver (exocortex)"
+  - RequiredPropertyResolver.createTripleStoreRequiredPropertyResolver (exocortex)
   - "CommandExecutionFlow required-property field augmentation (T3 #3656)"
+  - "PR kitelev/exocortex#4254 (merge 72b1f66d, release v16.240.8): RequiredPropertyResolver.fieldTypeFromRange derives targetClassUid (label form) from a symbolic Property_range via iriToObsidianName; axes S1-S3 (core), S4 (plugin production-shape); 3 mutants — ticket dc04eded"
 flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
@@ -42,6 +43,17 @@ Given a class whose SHACL shape declares one or more required (exo__Property_min
 When I create an instance of that class
 Then the create-instance form includes a field for each required property (and skips non-required ones)
 And each field's renderer is derived from the property range (date / number / boolean / assetRef / text)
+
+Scenario: an object range in SYMBOLIC IRI form yields a picker-keyed assetRef field (2026-09-17, ticket dc04eded, PR #4254)
+  Given a required property whose exo:Property_range object is the symbolic ontology IRI <ns>#<Local>
+    (the form the converter emits for every class with a prefix__LocalName label — ALL 22 required
+    object ranges on vault-exodev on 2026-09-17, 0 path-form; vault-my 13/0, vault-tbank 17/0)
+  When the create-instance form's required-property fields are resolved
+  Then the field is assetRef with targetClassUid = the class LABEL <ns>__<Local>
+    (via the shared core inverse iriToObsidianName → Namespace.fromTermIRI — every registered AND ad-hoc namespace)
+    And the plugin's DynamicFormModal builds that field's candidates from the class AND its subclasses (req 15f48fa1 closure)
+    And a path-form range obsidian://…/<uid>.md still yields the bare (lower-cased) class UID, exactly as before
+    And a datatype (xsd) range is still never an assetRef
 ```
 
 ## Verification
@@ -49,5 +61,20 @@ And each field's renderer is derived from the property range (date / number / bo
 **Revert-verified (unit binding):** `@req:ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0` — inverting the minCount filter in `RequiredPropertyResolver` (`if (mc > 0) continue;`) makes `RequiredPropertyResolver.test.ts "resolves a class's required (minCount>0) properties, skipping non-required"` go **RED** (required properties no longer resolved); restored → **GREEN** (2026-06-21, al-reqmgmt-p2, origin/main `035804ab`).
 
 **GUI-BDD binding (floor, cited):** the end-to-end create-instance form (real Obsidian) is exercised by `packages/obsidian-plugin/tests/e2e/eka-gui/create-instance-buttons.spec.ts` (Playwright, native-amd64 CI, PR #3583/#3659). Its revert-verify requires a Docker/native-amd64 run — **out of scope for this NO-Docker P2 session** and deferred (same precedent as seed `830ef788`). The unit binding above is the revert-verified evidence. Satisfies the P0 binding-class floor via the `gui-bdd` class (RFC 0003 §3.6).
+
+**Gap closed 2026-09-17 (ticket `dc04eded`, PR #4254, bug-fix under this req — no new req):**
+`RequiredPropertyResolver.fieldTypeFromRange` derived the picker key with `uidFrom`, which understands
+only the path-form / bare-UID range, so a SYMBOLIC range (`…/ontology/ems#Effort` — 22 of 22 required
+object ranges on the live vault-exodev, incl. `exo__Setting_key → exo#SettingKey`) reached the form as
+`assetRef` WITHOUT `targetClassUid` and the picker degraded to a plain text input: the assetRef renderer
+this req promises was effectively unmet for every required object property; the gap surfaced in the IRI
+form (dual-IRI, `sparql-iri-form-pre-verify`). The spec is extended above, not replaced. Axes
+`@req:ace6df4f-…` S1–S3 in `packages/core/tests/unit/services/RequiredPropertyResolver.test.ts`
+(registered ns / ad-hoc ns / path-form regression) and S4 in
+`packages/obsidian-plugin/tests/unit/presentation/modals/DynamicFormModal.test.ts` (production shape:
+REAL store → REAL resolver → REAL `CommandExecutionFlow.applyRequiredPropertyFields` → REAL
+`DynamicFormModal` with its production candidate resolver over a fake `app.metadataCache`); mutant
+driver: drop the symbolic branch → S1/S2/S4 RED, registered-only inverse → S2 RED, path-form branch
+broken → S3 RED.
 
 > Migrated requirement (A14): reverse-documented from already-written tests.
