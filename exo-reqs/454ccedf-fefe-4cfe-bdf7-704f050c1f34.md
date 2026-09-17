@@ -1,7 +1,7 @@
 ---
 exo__Asset_uid: 454ccedf-fefe-4cfe-bdf7-704f050c1f34
 exo__Asset_createdAt: 2026-09-17T10:45:01
-exo__Asset_updatedAt: 2026-09-17T10:46:39
+exo__Asset_updatedAt: 2026-09-17T11:30:29
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253]]"
 exo__Asset_createdBy: "[[4ef3962d-b8a7-42b5-bd28-88ec846f1d13]]"
@@ -9,7 +9,7 @@ exo__Asset_label: "req(exo): GroundingExecutor stamps exo__Asset_updatedAt on ev
 aliases:
   - "req(exo): GroundingExecutor stamps exo__Asset_updatedAt on every mutating grounding write (property_set / property_delete / property_append / property_increment / property_shift / body_template / class-flip / workflow_transition), only when the content actually changed — so the 19 single-step commands (set-parent, set-criticality-*, archive, shift-day-*, …) record a modification without a data-side bump step"
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
-req__Requirement_status: "[[4bd932c2-2507-4a2d-b3f2-163e096bfa81|req__RequirementStatusApproved]]"
+req__Requirement_status: "[[fccf8fa4-8004-41ee-9102-595a588e9be7|req__RequirementStatusActive]]"
 req__Requirement_priority: "[[481c3be1-d05c-4b78-8a3c-c61308d40bf1|req__RequirementPriorityP2]]"
 req__Requirement_bindingClass:
   - "[[f8841786-64c2-42a9-8b45-2d33fd6be87c|req__RequirementBindingClassIntegration]]"
@@ -27,6 +27,14 @@ req__Requirement_covers:
   - "Not governed: service_call groundings (17 commands mutate inside packages/services past these write points — separate follow-up under bbac67ce); create_instance (already writes updatedAt = createdAt, task 1af85afd)."
 req__Requirement_approvedBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_approvedAt: 2026-09-17T10:46:36
+req__Requirement_implementedBy:
+  - "GroundingExecutor.stampUpdatedAt (packages/core) — applied to the content before fileWriter.updateFile at the 8 mutating write points: property_set (also the workflow_transition status write), property_delete, convert-to-task / convert-to-project, body_template, property_append, property_increment, property_shift; value DateFormatter.toLocalTimestamp(clock.now()); non-stamps: byte-identical write, a branch whose own target is exo__Asset_updatedAt (step 49e00287), frontmatter-less target; refusals and composite rollback never reach it"
+  - "PR kitelev/exocortex#4251 (merge e3d79024, Auto Release run 35189723615, release v16.240.5, npm 16.240.5; ticket 533856e4): axes B1-B9 (core unit GroundingExecutor.updatedat-stamp.test.ts 17 + cli apply-mutation-parity B1/B6/B7), mutants M1-M6 RED per driver, revert-verify M1 → B1/B2/B2b/B5/B6/B7/B9 RED; published-CLI smoke on a temp vault: set-parent 09:23:15 → 11:29:55, no-op re-apply byte-identical, start-effort (workflow_transition) bumped"
+req__Requirement_verifiedBy:
+  - packages/core/tests/unit/services/GroundingExecutor.updatedat-stamp.test.ts::@req:454ccedf-fefe-4cfe-bdf7-704f050c1f34 GroundingExecutor stamps exo__Asset_updatedAt on every mutating write (ticket 533856e4) > B2 (x8 branches) / B2b / B3 / B4 / B5 / B7 (x3) / B8 / B9
+  - "packages/cli/tests/integration/apply-mutation-parity.integration.test.ts::Issue #3779 — CLI apply mutation parity (relabel + explicit parent) > @req:454ccedf-fefe-4cfe-bdf7-704f050c1f34 B1 set-parent (single property_set, no data-side bump step) stamps exo__Asset_updatedAt on the real apply path"
+  - "packages/cli/tests/integration/apply-mutation-parity.integration.test.ts::Issue #3779 — CLI apply mutation parity (relabel + explicit parent) > @req:454ccedf-fefe-4cfe-bdf7-704f050c1f34 B7 re-applying set-parent with the SAME parent is a no-op: file byte-identical, updatedAt not touched"
+  - "packages/cli/tests/integration/apply-mutation-parity.integration.test.ts::Issue #3779 — CLI apply mutation parity (relabel + explicit parent) > @req:f7790000-3779-4bbb-8bbb-000000000002 @req:454ccedf-fefe-4cfe-bdf7-704f050c1f34 REVERT-VERIFY / B6"
 ---
 
 ## Job Story
