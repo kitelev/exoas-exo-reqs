@@ -2,7 +2,7 @@
 exo__Asset_uid: ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T01:30:00+05:00
-exo__Asset_updatedAt: 2026-09-17T15:29:50
+exo__Asset_updatedAt: 2026-09-18T09:33:55
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
@@ -20,12 +20,14 @@ req__Requirement_author: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 req__Requirement_covers:
   - "exo create-instance — SHACL-shape-driven required-property form fields (T3, project bbe40f8c / #3656): a class's minCount>0 properties become create-instance form fields"
 req__Requirement_verifiedBy:
-  - "packages/exocortex/tests/unit/services/RequiredPropertyResolver.test.ts::createTripleStoreRequiredPropertyResolver > resolves a class's required (minCount>0) properties, skipping non-required"
-  - "packages/obsidian-plugin/tests/e2e/eka-gui/create-instance-buttons.spec.ts (gui-bdd, real Obsidian Playwright) — floor binding"
+  - packages/exocortex/tests/unit/services/RequiredPropertyResolver.test.ts::createTripleStoreRequiredPropertyResolver > resolves a class's required (minCount>0) properties, skipping non-required
+  - packages/obsidian-plugin/tests/e2e/eka-gui/create-instance-buttons.spec.ts (gui-bdd, real Obsidian Playwright) — floor binding
+  - packages/core/tests/unit/services/RequiredPropertyResolver.test.ts::createTripleStoreRequiredPropertyResolver > CURIE-literal datatype range xsd:<local> (ticket 5380e7fd) > C1 / C2 / C3
 req__Requirement_implementedBy:
   - RequiredPropertyResolver.createTripleStoreRequiredPropertyResolver (exocortex)
   - "CommandExecutionFlow required-property field augmentation (T3 #3656)"
   - "PR kitelev/exocortex#4254 (merge 72b1f66d, release v16.240.8): RequiredPropertyResolver.fieldTypeFromRange derives targetClassUid (label form) from a symbolic Property_range via iriToObsidianName; axes S1-S3 (core), S4 (plugin production-shape); 3 mutants — ticket dc04eded"
+  - "PR kitelev/exocortex#4262 (ticket 5380e7fd): RequiredPropertyResolver.xsdLocalName recognises the CURIE-literal datatype range xsd:<local> (the form 100 % of live datatype ranges carry) like the full XSD IRI; axes C1-C3 (core)"
 flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
@@ -54,6 +56,13 @@ Scenario: an object range in SYMBOLIC IRI form yields a picker-keyed assetRef fi
     And the plugin's DynamicFormModal builds that field's candidates from the class AND its subclasses (req 15f48fa1 closure)
     And a path-form range obsidian://…/<uid>.md still yields the bare (lower-cased) class UID, exactly as before
     And a datatype (xsd) range is still never an assetRef
+
+Scenario: a CURIE-literal datatype range `xsd:<local>` renders the same field as the full XSD IRI (2026-09-18, ticket 5380e7fd, PR #4262)
+  Given a required property whose exo:Property_range is the CURIE literal "xsd:dateTime" (or "xsd:integer" / "xsd:boolean" / "xsd:string")
+    (the form every datatype range on the live vaults carries — vault-exodev 134, vault-my 48, vault-tbank 44 on 2026-09-18; the full http://www.w3.org/2001/XMLSchema# literal has 0 live carriers)
+  When the create-instance form's required-property fields are resolved
+  Then the field is date (/ number / boolean / text) exactly as for the full XSD IRI, and never an assetRef
+    And a range with a foreign CURIE prefix (ex:date), a bare "xsd:" or an unknown xsd local (xsd:gYear) still renders as text
 ```
 
 ## Verification
@@ -76,5 +85,17 @@ REAL store → REAL resolver → REAL `CommandExecutionFlow.applyRequiredPropert
 `DynamicFormModal` with its production candidate resolver over a fake `app.metadataCache`); mutant
 driver: drop the symbolic branch → S1/S2/S4 RED, registered-only inverse → S2 RED, path-form branch
 broken → S3 RED.
+
+**Gap closed 2026-09-18 (ticket `5380e7fd`, PR #4262, bug-fix under this req — no new req):**
+`RequiredPropertyResolver.fieldTypeFromRange` recognised a datatype range only by the full
+`http://www.w3.org/2001/XMLSchema#` prefix; every datatype range on the live vaults is the CURIE
+literal `"xsd:<local>"` (134 / 48 / 44 on the three vaults, 0 full-IRI literals), so `ems__Reminder_at`
+(`xsd:dateTime`, required) rendered as a plain text field instead of a date field — the "renderer derived
+from the property range" promise was unmet for 100 % of live datatype ranges. Fixed by `xsdLocalName`
+(full IRI ∪ `xsd:` CURIE); axes `@req:ace6df4f-…` C1–C3 in
+`packages/core/tests/unit/services/RequiredPropertyResolver.test.ts`; mutant driver: CURIE branch removed
+→ C1 RED, any-prefix → C3 RED, CURIE local not lower-cased → C1 RED, full-IRI branch removed → C2 RED.
+Out of scope: `ShapeLoader.loadFromRDFGraph` drops the same CURIE literal (sh:datatype never checked for
+those ranges) — separate follow-up ticket with the measured blast-radius.
 
 > Migrated requirement (A14): reverse-documented from already-written tests.
