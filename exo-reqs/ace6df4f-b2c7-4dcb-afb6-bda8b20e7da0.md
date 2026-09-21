@@ -2,7 +2,7 @@
 exo__Asset_uid: ace6df4f-b2c7-4dcb-afb6-bda8b20e7da0
 exo__Asset_isDefinedBy: "[[a64ca05b-ed45-4fbc-a8a9-54f9cfcf895c]]"
 exo__Asset_createdAt: 2026-06-21T01:30:00+05:00
-exo__Asset_updatedAt: 2026-09-18T09:33:55
+exo__Asset_updatedAt: 2026-09-22T02:25:46
 exo__Asset_createdBy: "[[de20a3f1-7483-4714-ab28-b45f5cf02c76|ExoAssistant]]"
 exo__Instance_class:
   - "[[8c5af681-3413-4219-8636-0ac229d1b253|req__Requirement]]"
@@ -28,6 +28,7 @@ req__Requirement_implementedBy:
   - "CommandExecutionFlow required-property field augmentation (T3 #3656)"
   - "PR kitelev/exocortex#4254 (merge 72b1f66d, release v16.240.8): RequiredPropertyResolver.fieldTypeFromRange derives targetClassUid (label form) from a symbolic Property_range via iriToObsidianName; axes S1-S3 (core), S4 (plugin production-shape); 3 mutants — ticket dc04eded"
   - "PR kitelev/exocortex#4262 (ticket 5380e7fd): RequiredPropertyResolver.xsdLocalName recognises the CURIE-literal datatype range xsd:<local> (the form 100 % of live datatype ranges carry) like the full XSD IRI; axes C1-C3 (core)"
+  - "PR kitelev/exocortex#4320 (merge 3c55ee44, release v16.245.1): the resolver treats the two live IRI spellings of a class as ONE node, so a SYMBOLIC exo__Property_domain (95/95 live) and a symbolic exo__Class_superClass parent (400/408) resolve; end effect 0 of 23/17/20 classes to 23/17/20 measured through loadVaultTriples; axes Y1-Y6 (core) + Z1-Z3 (cli seam), 5 mutants — ticket b4b76541"
 flow__WorkItem_migratedAt: 2026-08-16T19:16:22
 ---
 
@@ -63,6 +64,19 @@ Scenario: a CURIE-literal datatype range `xsd:<local>` renders the same field as
   When the create-instance form's required-property fields are resolved
   Then the field is date (/ number / boolean / text) exactly as for the full XSD IRI, and never an assetRef
     And a range with a foreign CURIE prefix (ex:date), a bare "xsd:" or an unknown xsd local (xsd:gYear) still renders as text
+
+Scenario: a SYMBOLIC class reference on the DOMAIN and on the superClass PARENT resolves (2026-09-22, ticket b4b76541, PR #4320)
+  Given a required property whose exo:Property_domain object is the symbolic ontology IRI <ns>#<Local>
+    (the form 95 of 95 live required definitions carry — vault-exodev 44, vault-my 24, vault-tbank 27
+    on 2026-09-22; path-form 0), and a class whose exo:Class_superClass PARENT is symbolic too
+    (400 of 408 live parents on vault-exodev; the CHILD side is path-form 408 of 408)
+  When the create-instance form's required-property fields are resolved
+  Then the field appears for the class itself AND for a class that inherits it through that symbolic parent
+    (uid and label are two spellings of ONE class, unified through the store — the answer
+     ClassSubsumption already adopted for the picker's subclass closure)
+    And a path-form domain keeps resolving to the bare class UID exactly as before
+    And a symbolic domain whose class asset is ABSENT from the store does NOT match
+      (the label twin is read from the store, never inferred)
 ```
 
 ## Verification
@@ -97,5 +111,34 @@ from the property range" promise was unmet for 100 % of live datatype ranges. Fi
 → C1 RED, any-prefix → C3 RED, CURIE local not lower-cased → C1 RED, full-IRI branch removed → C2 RED.
 Out of scope: `ShapeLoader.loadFromRDFGraph` drops the same CURIE literal (sh:datatype never checked for
 those ranges) — separate follow-up ticket with the measured blast-radius.
+
+**Gap closed 2026-09-22 (ticket `b4b76541`, PR #4320 → v16.245.1, bug-fix under this req — no new req):**
+`RequiredPropertyResolver` keyed EVERY class reference on `uidFrom` (path form / bare UID), while the
+live vaults emit `exo__Property_domain` and the PARENT of `exo__Class_superClass` SYMBOLICALLY — 95 of
+95 required definitions across the three vaults, 400 of 408 superClass parents on vault-exodev. The
+domain check therefore short-circuited for every live definition: measured through the production
+loader (`loadVaultTriples`), **0 of 23 / 0 of 17 / 0 of 20** classes that declare a required property
+produced a single form field (vault-exodev / my / tbank), so this requirement was unmet for 100 % of
+live classes. ⛔ The 2026-09-17 fix for the RANGE position sits BELOW that `continue`, so its effect was
+unreachable on live data — §A66, the axes judged the intermediate record rather than the end effect.
+After the fix: **23 of 23 / 17 of 17 / 20 of 20**.
+
+Axes `@req:ace6df4f-…` **Y1–Y6** in `packages/core/tests/unit/services/RequiredPropertyResolver.test.ts`
+(symbolic domain · symbolic-parent inheritance · path-form control · no-required control · Literal
+`rdfs:label` twin per §A29 · absent-class-asset control) and **Z1–Z3** in
+`packages/cli/tests/integration/required-property-live-loader.integration.test.ts`, which drive the
+PARSER→RESOLVER seam on a three-file fixture through the production loader. Mutant driver
+`required-property-class-keys-b4b76541.spec.json` (control 0 red): symbolic key branch removed →
+`Y1 Y2 Y5 Z1 Z2`; twin step dropped → `Y1 Y5 Z1`; `labelKeyOf` Literal-only → `Y1`; host twin branch
+removed → `Y1 Y5 Z1`; minCount filter neutralised → `Y4`.
+
+⛤ Measured while writing those axes: for a `prefix__Name` label the converter emits **both** label
+twins (`exo__Asset_label` as an IRI, `rdfs:label` as a Literal), so the Literal branch alone suffices on
+today's emission and the IRI branch is **defensive for that shape** — load-bearing only where the
+Literal twin is absent. Named as defensive rather than counted as coverage, and pinned by `Z3`.
+
+The twin lookup is point-wise, not a scan: scanning all label triples per call measured **128.2 ms**
+median against a **0.3 ms** baseline on a 609k-triple vault, and this resolver sits on the button/layout
+render path; the shipped variant is **0.9 ms** median.
 
 > Migrated requirement (A14): reverse-documented from already-written tests.
